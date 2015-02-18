@@ -1,0 +1,27 @@
+{
+  "name": "roq-service",
+  "version": "0.0.0",
+  "description": "Roq Platform service library.",
+  "main": "index.coffee",
+  "scripts": {
+    "test": "make test"
+  },
+  "author": "Jovan Alleyne <jovan@bigmountainideas.com>",
+  "license": "MIT",
+  "dependencies": {
+    "coffee-script": "^1.9.0",
+    "debug": "^2.1.1",
+    "generic-pool": "^2.1.1",
+    "bson": "^0.2.18",
+    "node-uuid": "^1.4.2",
+    "promise": "^6.1.0",
+    "mpromise": "^0.5.5",
+    "route-map": "^0.1.0",
+    "path-to-regexp": "^1.0.3",
+    "async": "^0.9.0"
+  },
+  "devDependencies": {
+    "mocha": "^2.1.0",
+    "should": "^5.0.0"
+  }
+}
