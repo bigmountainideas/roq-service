@@ -1,5 +1,4 @@
 net = require 'net'
-{BSON} = require('bson').BSONPure
 debug = require 'debug'
 async = require 'async'
 pathtoregex = require 'path-to-regexp'
@@ -33,7 +32,7 @@ class RoqService extends net.Server
     @.on 'connection', @.onConnection.bind @
 
 
-  listen: (port=0,done)->
+  listen: (port=0)->
     @.debug 'Attempting to accpet incoming connections on port %s', port
     super
     @.on 'listening', @.onServerListening.bind @

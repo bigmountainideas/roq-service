@@ -1,4 +1,3 @@
-{BSON} = require('bson').BSONPure
 net = require 'net'
 Promise = require 'mpromise'
 debug = require('debug') 'roq:service-client'

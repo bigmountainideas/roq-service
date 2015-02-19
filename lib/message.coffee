@@ -1,4 +1,3 @@
-{BSON} = require('bson').BSONPure
 uuid = require 'node-uuid'
 
 
