@@ -51,37 +51,41 @@ class RoqService extends net.Server
     conn.on 'data', (data)=>
       #
       transactions = RoqServiceMessage.parse buffer, data.toString('utf-8')
+
       #
-      conn.debug 'Service processing %d transaction(s) %j', transactions.length, transactions
-      #
-      for t in transactions
-        #
-        resp = null
+      if transactions
 
         #
-        for endpoint, stack of @.endpoints
-
-          if match = stack._match t.endpoint
-            conn.debug 'Endpoint matched [%s] %s', stack._path, t.endpoint
-
-            resp = {}
-
-            async.applyEachSeries stack, t, resp, ()=>
-
-              #
-              msg = new RoqServiceMessage t.endpoint, resp, t.transaction
-
-              #
-              @.writeToConnection conn, "#{msg.encode()}#{RoqServiceMessage.EOT}"
-
-            break
-
-        unless resp
+        conn.debug 'Service processing %d transaction(s) %j', transactions.length, transactions
+        #
+        for t in transactions
           #
-          msg = new RoqServiceMessage t.endpoint, {"[404] Not found.","error": "ResourceException. Service endpoint not found."}, t.transaction
+          resp = null
 
           #
-          @.writeToConnection conn, "#{msg.encode()}#{RoqServiceMessage.EOT}"
+          for endpoint, stack of @.endpoints
+
+            if match = stack._match t.endpoint
+              conn.debug 'Endpoint matched [%s] %s', stack._path, t.endpoint
+
+              resp = {}
+
+              async.applyEachSeries stack, t, resp, ()=>
+
+                #
+                msg = new RoqServiceMessage t.endpoint, resp, t.transaction
+
+                #
+                @.writeToConnection conn, "#{msg.encode()}#{RoqServiceMessage.EOT}"
+
+              break
+
+          unless resp
+            #
+            msg = new RoqServiceMessage t.endpoint, {"[404] Not found.","error": "ResourceException. Service endpoint not found."}, t.transaction
+
+            #
+            @.writeToConnection conn, "#{msg.encode()}#{RoqServiceMessage.EOT}"
 
 
     #
